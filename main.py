@@ -5,6 +5,7 @@ import smtplib
 import os
 import datetime
 import time
+import config
 
 # Variables
 dsign = "$"
@@ -19,9 +20,9 @@ URL = "https://www.amazon.com/gp/product/B01N2PE8CZ/"
 
 # Headers to view page with
 headers = {
-    "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0",
-    "Cache-Control" : "no-cache",
-    "Pragma" : "no-cache"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0",
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache"
     }
 
 
@@ -53,8 +54,9 @@ def check_price():
     i_price = int(new_price)
 
     if(i_price < alert_amount):
-        difference = alert_amount -i_price
+        difference = alert_amount - i_price
         notify()
+
 
 # Function to send an email to the user
 def notify():
@@ -81,7 +83,7 @@ def send_email(subject, content):
         "Content-Type": "text/html; charset=utf-8",
         "Content-Disposition": "inline",
         "Content-Transfer-Encoding": "8bit",
-        "From": "scraperamazon81@gmail.com",
+        "From": config.sender,
         "To": "gavinafoutz@gmail.com",
         "Date": datetime.datetime.now().strftime("%a, %d %b %Y  %H:%M:%S %Z"),
         "X-Mailer": "python",
@@ -94,15 +96,15 @@ def send_email(subject, content):
         msg += "%s: %s\n" % (key, value)
 
     # add contents
-    msg += "\n%s\n"  % (content)
+    msg += "\n%s\n" % (content)
 
-    s = smtplib.SMTP("smtp.gmail.com", "587")
+    s = smtplib.SMTP(config.host, config.port)
 
     s.ehlo()
     s.starttls()
     s.ehlo()
 
-    s.login("scraperamazon81@gmail.com", "AbJEQCo6ce8z")
+    s.login(config.username, config.password)
 
     s.sendmail(headers["From"], headers["To"], msg.encode("utf8"))
     s.quit()

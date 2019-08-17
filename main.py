@@ -29,7 +29,7 @@ headers = {
     "Pragma": "no-cache"
     }
 
-
+# Check price of item from product link
 def check_price():
     # Setting global variables
     global title
@@ -115,10 +115,39 @@ def send_email(subject, content):
     s.sendmail(headers["From"], headers["To"], msg.encode("utf8"))
     s.quit()
 
+while True:
+    to_email = input("Enter your email address: ")
 
-to_email = input("Enter your email address: ")
-URL = input("Paste the amazon product link: ")
-alert_amount = input("What is your price threshold? ")
+    if to_email and not to_email.isspace():
+        if "@" in to_email:
+            break
+        else:
+            continue
+    else:
+        continue
+
+while True:
+    URL = input("Paste the amazon product link: ")
+
+    if URL and not URL.isspace():
+        if "amazon.com" in URL:
+            break
+        else:
+            continue    
+    else:
+        continue
+
+while True:
+    alert_amount = input("What is your price threshold? ")
+
+    if alert_amount and not alert_amount.isspace():
+        if alert_amount.isnumeric():            
+            break
+        else:
+            continue
+    else:
+        continue
+
 alert_amount = int(alert_amount)
 short_URL = bitly.shorten(uri = URL)
 print("Thanks! You'll be notified when the price drops under your threshold.\n")

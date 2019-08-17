@@ -14,9 +14,10 @@ alert_amount = 300
 title = ""
 difference = 0
 i_price = 0
+to_email = ""
 
 # URL to scrape
-URL = "https://www.amazon.com/gp/product/B01N2PE8CZ/"
+URL = ""
 
 # Headers to view page with
 headers = {
@@ -76,6 +77,8 @@ def notify():
 # Send email in utf-8
 def send_email(subject, content):
 
+    global to_email
+
     for ill in ["\n", "\r"]:
         subject = subject.replace(ill, " ")
 
@@ -84,7 +87,7 @@ def send_email(subject, content):
         "Content-Disposition": "inline",
         "Content-Transfer-Encoding": "8bit",
         "From": config.sender,
-        "To": "gavinafoutz@gmail.com",
+        "To": to_email,
         "Date": datetime.datetime.now().strftime("%a, %d %b %Y  %H:%M:%S %Z"),
         "X-Mailer": "python",
         "Subject": subject
@@ -109,6 +112,12 @@ def send_email(subject, content):
     s.sendmail(headers["From"], headers["To"], msg.encode("utf8"))
     s.quit()
 
+
+to_email = input("Enter your email address: ")
+URL = input("Paste the amazon product link: ")
+alert_amount = input("What is your price threshold? ")
+alert_amount = int(alert_amount)
+print("Thanks! You'll be notified when the price drops under your threshold.\n")
 
 while True:
     check_price()

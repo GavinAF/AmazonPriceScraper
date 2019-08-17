@@ -6,6 +6,7 @@ import os
 import datetime
 import time
 import config
+import bitly_api
 
 # Variables
 dsign = "$"
@@ -15,6 +16,8 @@ title = ""
 difference = 0
 i_price = 0
 to_email = ""
+short_URL = ""
+bitly = bitly_api.Connection(config.bitly_user, config.bitly_api_key)
 
 # URL to scrape
 URL = ""
@@ -67,7 +70,7 @@ def notify():
 
     subject = "🚨 The price of {} has fallen! 🚨".format(title)
 
-    body = "It's currently {} dollars cheaper than your price point of {}.\nCheck it out now: {}".format(difference, alert_amount, URL)
+    body = "It's currently {} dollars cheaper than your price point of {}.\nCheck it out now: {}".format(difference, alert_amount, short_URL["url"])
 
     send_email(subject, body)
 
@@ -117,6 +120,7 @@ to_email = input("Enter your email address: ")
 URL = input("Paste the amazon product link: ")
 alert_amount = input("What is your price threshold? ")
 alert_amount = int(alert_amount)
+short_URL = bitly.shorten(uri = URL)
 print("Thanks! You'll be notified when the price drops under your threshold.\n")
 
 while True:

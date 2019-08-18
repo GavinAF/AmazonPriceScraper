@@ -7,6 +7,7 @@ import datetime
 import time
 import config
 import bitly_api
+from pytextbelt import Textbelt
 
 # Variables
 dsign = "$"
@@ -18,6 +19,7 @@ i_price = 0
 to_email = ""
 short_URL = ""
 bitly = bitly_api.Connection(config.bitly_user, config.bitly_api_key)
+phone = ""
 
 # URL to scrape
 URL = ""
@@ -73,8 +75,22 @@ def notify():
     body = "It's currently {} dollars cheaper than your price point of {}.\nCheck it out now: {}".format(difference, alert_amount, short_URL["url"])
 
     send_email(subject, body)
+    send_text(phone)
 
     print("Notification dispatched!")
+
+
+# Send text alert to user
+def send_text(phonenumber):
+    global title
+    global difference
+    global alert_amount
+
+    message = ("The price of {} is currently {} dollars cheaper than your {} price point".format(title, difference, alert_amount))
+
+    recipient = Textbelt.Recipient(phonenumber, "us")
+    recipient.send(message)
+    print("Sent Successfully!" if recipient.send(message)["success"] else "Sending Failed!")
 
 
 # Send email in utf-8
@@ -120,6 +136,17 @@ while True:
 
     if to_email and not to_email.isspace():
         if "@" in to_email:
+            break
+        else:
+            continue
+    else:
+        continue
+
+while True:
+    phone = input("What is your phone number? ")
+
+    if phone and not phone.isspace():
+        if phone.isnumeric():            
             break
         else:
             continue

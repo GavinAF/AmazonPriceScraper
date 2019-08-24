@@ -1,1 +1,91 @@
 {% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/home_particle.css' %}">
+
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/tabui.css' %}">
+
+{% endblock %}
+
+
+{% block body_content %}
+
+<canvas id="particle-canvas"></canvas>
+<script  src="{% static 'js/particle_script.js' %}"></script>
+
+<div class="header">
+        <h1 class="header__title">Fire Scraper</h1>
+        <!--<div class="header__btns btns"><a class="header__btn btn" href="https://github.com/GavinAF/Fire-Scraper" title="Check on Github" target="_blanc">Check on Github</a></div>-->
+      </div>
+
+
+
+      <div class="content">
+            <!--content title-->
+            <!--<h2 class="content__title">Click to any navigation link</h2>-->
+            <!--content inner-->
+            <div class="content__inner">
+              <!--tabs-->
+              <div class="tabs">
+                <!--tabs navigation-->
+                <div class="tabs__nav">
+                  <ul class="tabs__nav-list">
+                    <li class="tabs__nav-item js-active">Login</li>
+                    <li class="tabs__nav-item">Register</li>
+                    <li class="tabs__nav-item">FAQ</li>
+                  </ul>
+                </div>
+                <!--tabs panels-->
+                <div class="tabs__panels">
+                  <!--Login panel-->
+                  <div class="tabs__panel">
+
+                        {% load crispy_forms_tags %}
+                        <form method="POST" class="form-group">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <button type="submit" class="btn btn-success">Register</button>
+                        </form>
+
+                  </div> <!--End Login panel-->
+                  <!--single panel-->
+                  <div class="tabs__panel">
+                    <div class="tabs__panel-card">
+                      <div class="tabs__panel-content"></div>
+                      <div class="tabs__panel-content"></div>
+                    </div>
+                    <div class="tabs__panel-card">
+                      <div class="tabs__panel-content"></div>
+                    </div>
+                    <div class="tabs__panel-card tabs__panel-card--spaced-between">
+                      <div class="tabs__panel-img"></div>
+                      <div class="tabs__panel-img"></div>
+                      <div class="tabs__panel-img"></div>
+                    </div>
+                  </div>
+                  <!--single panel-->
+                  <div class="tabs__panel">
+                    <div class="tabs__panel-card">
+                      <div class="tabs__panel-content"></div>
+                    </div>
+                    <div class="tabs__panel-card">
+                      <div class="tabs__panel-content"></div>
+                      <div class="tabs__panel-img"></div>
+                    </div>
+                    <div class="tabs__panel-card">
+                      <div class="tabs__panel-img"></div>
+                      <div class="tabs__panel-content"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script  src="{% static 'js/tabui.js' %}"></script>
+
+{% endblock %}

@@ -4,10 +4,22 @@
 
 {% block head %}
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/home_particle.css' %}">
 
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/tabui.css' %}">
+
+{% load crispy_forms_tags %}
 
 {% endblock %}
 
@@ -34,52 +46,38 @@
                 <!--tabs navigation-->
                 <div class="tabs__nav">
                   <ul class="tabs__nav-list">
-                    <li class="tabs__nav-item js-active">Login</li>
-                    <li class="tabs__nav-item">Register</li>
+                    <li class="tabs__nav-item js-active">Register</li>
+                    <li class="tabs__nav-item">Login</li>
                     <li class="tabs__nav-item">FAQ</li>
                   </ul>
                 </div>
                 <!--tabs panels-->
                 <div class="tabs__panels">
-                  <!--Login panel-->
+                  <!--Register panel-->
                   <div class="tabs__panel">
-
-                        {% load crispy_forms_tags %}
-                        <form method="POST" class="form-group">
+                        <form name="register" method="POST" class="form-group">
                                 {% csrf_token %}
-                                {{ form|crispy }}
+                                {% crispy register_form %}
                                 <button type="submit" class="btn btn-success">Register</button>
                         </form>
+                  </div> 
+                  <!--End Register panel-->
 
-                  </div> <!--End Login panel-->
-                  <!--single panel-->
+                  <!--Start Login panel-->
                   <div class="tabs__panel">
-                    <div class="tabs__panel-card">
-                      <div class="tabs__panel-content"></div>
-                      <div class="tabs__panel-content"></div>
-                    </div>
-                    <div class="tabs__panel-card">
-                      <div class="tabs__panel-content"></div>
-                    </div>
-                    <div class="tabs__panel-card tabs__panel-card--spaced-between">
-                      <div class="tabs__panel-img"></div>
-                      <div class="tabs__panel-img"></div>
-                      <div class="tabs__panel-img"></div>
-                    </div>
+                      <form name="login" method="POST" class="form-group">
+                        {% csrf_token %}
+                        {% crispy login_form %}
+                        <button type="submit" class="btn btn-success">Login</button>
+                      </form>
                   </div>
-                  <!--single panel-->
+                  <!--End Login panel-->
+                  
+                  <!--Start FAQ panel-->
                   <div class="tabs__panel">
-                    <div class="tabs__panel-card">
-                      <div class="tabs__panel-content"></div>
-                    </div>
-                    <div class="tabs__panel-card">
-                      <div class="tabs__panel-content"></div>
-                      <div class="tabs__panel-img"></div>
-                    </div>
-                    <div class="tabs__panel-card">
-                      <div class="tabs__panel-img"></div>
-                      <div class="tabs__panel-content"></div>
-                    </div>
+
+
+
                   </div>
                 </div>
               </div>

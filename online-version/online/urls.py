@@ -17,10 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
-urlpatterns = [
-    path('', include("main.urls")),
-    path('register/', views.register, name="register"),
-    #path('', include("django.contrib.auth.urls")),
-    path('admin/', admin.site.urls),
-]
+app_name = "online"
 
+urlpatterns = [
+    path("", include("main.urls")),
+    path("admin/", admin.site.urls),
+    path("dashboard/", include("dashboard.urls")),
+]

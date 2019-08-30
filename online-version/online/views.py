@@ -1,9 +1,4 @@
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
-def index(request):
-    output = "Amazon Price Scraper"
-    return HttpResponse(output)
-
-def register(response):
-    output = ""
-    return HttpResponse(output)

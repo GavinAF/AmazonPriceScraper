@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
     # my own
     'main',
-    'register',
+    'dashboard',
 
 ]
 

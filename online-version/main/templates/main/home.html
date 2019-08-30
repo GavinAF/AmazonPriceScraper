@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/home_particle.css' %}">
 
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel="stylesheet" href="{% static 'css/tabui.css' %}">
 
 {% load crispy_forms_tags %}
@@ -29,61 +30,46 @@
 <canvas id="particle-canvas"></canvas>
 <script  src="{% static 'js/particle_script.js' %}"></script>
 
-<div class="header">
-        <h1 class="header__title">Fire Scraper</h1>
-        <!--<div class="header__btns btns"><a class="header__btn btn" href="https://github.com/GavinAF/Fire-Scraper" title="Check on Github" target="_blanc">Check on Github</a></div>-->
-      </div>
 
-
-
-      <div class="content">
-            <!--content title-->
-            <!--<h2 class="content__title">Click to any navigation link</h2>-->
-            <!--content inner-->
-            <div class="content__inner">
-              <!--tabs-->
-              <div class="tabs">
-                <!--tabs navigation-->
-                <div class="tabs__nav">
-                  <ul class="tabs__nav-list">
-                    <li class="tabs__nav-item js-active">Register</li>
-                    <li class="tabs__nav-item">Login</li>
-                    <li class="tabs__nav-item">FAQ</li>
-                  </ul>
-                </div>
-                <!--tabs panels-->
-                <div class="tabs__panels">
-                  <!--Register panel-->
-                  <div class="tabs__panel">
-                        <form name="register" method="POST" class="form-group">
-                                {% csrf_token %}
-                                {% crispy register_form %}
-                                <button type="submit" class="btn btn-success">Register</button>
-                        </form>
-                  </div> 
-                  <!--End Register panel-->
-
-                  <!--Start Login panel-->
-                  <div class="tabs__panel">
-                      <form name="login" method="POST" class="form-group">
-                        {% csrf_token %}
-                        {% crispy login_form %}
-                        <button type="submit" class="btn btn-success">Login</button>
-                      </form>
-                  </div>
-                  <!--End Login panel-->
-                  
-                  <!--Start FAQ panel-->
-                  <div class="tabs__panel">
-
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="form">
+      
+        <ul class="tab-group">
+          <li class="tab active"><a href="#signup">Sign Up</a></li>
+          <li class="tab"><a href="#login">Log In</a></li>
+        </ul>
+        
+        <div class="tab-content">
+          <div id="signup">   
+            <h1>Sign Up for Free</h1>
+            
+            <form id="register-form" action="{% url 'main:home' %}" method="POST" class="form-group">
+              {% csrf_token %}
+              {% crispy register_form %}
+              <!--<button type="submit" class="btn btn-success">Register</button>-->
+              <button form="register-form" name="register" type="submit" class="button button-block">Get Started</button>
+            </form>
+  
           </div>
+          
+          <div id="login">   
+            <h1>Welcome Back!</h1>
+            
+            <form id="login-form" action="{% url 'main:home' %}" method="POST" class="form-group">
+              {% csrf_token %}
+              {% crispy login_form %}
 
-          <script  src="{% static 'js/tabui.js' %}"></script>
+              <p class="forgot"><a href="#">Forgot Password?</a></p>
+              <button form="login-form" name="login" type="submit" class="button button-block">Log In</button>
+            </form>
+  
+          </div>
+          
+        </div><!-- tab-content -->
+        
+  </div> <!-- /form -->
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="{% static 'js/tabui.js' %}"></script>
 
 {% endblock %}

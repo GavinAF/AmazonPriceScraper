@@ -4,39 +4,6 @@
         {% load static %}
         <title>{% block title%}Fire Scraper | Dashboard{% endblock %}</title>
 
-
-        <style type="text/css">
-            .sidenav{
-                height: 100%;
-                width: 160px;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: #111;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
-
-            .sidenav a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                color: #818181;
-                font-size: 25px;
-                display: block;
-            }
-
-            .sidenav a:hover {
-                color: #f1f1f1;
-            }
-
-            .main {
-                margin-left: 150px;
-                padding: 0px 10px;
-            }
-        </style>
-
-
         <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}">
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16x16.png' %}">
@@ -56,20 +23,10 @@
 
     <body>
 
-        <div class="sidenav">
-            <a href="/dashboard">Dash</a>
-            <a href="/dashboard/view">View</a>
-            <a href="/dashboard/create">Create</a>
-            <form class="logout-link" action="{% url 'main:logout' %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-
-        <div id="body_content", name="body_content", class="main">
+        <div id="body_content", name="body_content">
             {% block body_content %}
             {% endblock %}
         </div>
-
+        
     </body>
 </html>

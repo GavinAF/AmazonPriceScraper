@@ -37,6 +37,5 @@ def home(response):
     
 @login_required(login_url="/")
 def logout_view(response):
-    if response.method == "POST":
-        logout(response)
-        return redirect("main:home")
+    logout(response)
+    return redirect("main:home")

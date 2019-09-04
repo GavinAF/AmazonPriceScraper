@@ -7,5 +7,9 @@ app_name = "dashboard"
 urlpatterns = [
 
 path("", views.dashboard, name="dashboard"),
+path("user/", views.profile, name="profile"),
+path("view/", views.view_links, name="view"),
+path("delete/", views.delete),
+path("delete/<slug:linkid>", views.delete, name="delete"),
 
 ]

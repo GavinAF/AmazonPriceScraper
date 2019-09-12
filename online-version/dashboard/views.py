@@ -29,6 +29,17 @@ def view_links(response):
 
     links = Link.objects.all().filter(owner=user)
 
+    if response.method == "POST":
+        if "add_link" in response.POST:
+            new_company = response.POST.get("company", "")
+            new_product = response.POST.get("product_name", "")
+            new_url = response.POST.get("url", "")
+            new_threshold = response.POST.get("threshold", "")
+
+            link_add = Link(url=new_url, store=new_company, threshold=new_threshold, active="True", title=new_product, owner=user)
+            link_add.save()
+            return redirect("dashboard:view")
+
     return render(response, "dashboard/view.html", {"username":username, "links":links})
 
 

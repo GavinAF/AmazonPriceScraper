@@ -54,7 +54,23 @@ def delete(response, linkid):
 
     return redirect("dashboard:view")
 
-def link_update(response, linkid):
+def modal(response, linkid):
+
+    if response.user.is_authenticated:
+        user = response.user
+
+    
+    instance = get_object_or_404(Link.objects.all().filter(owner=user), pk=linkid)
+    context={
+        'instance':instance
+    }
+    
+    return render(response, "dashboard/modal.html", context)
+
+def update(response):
+
+    if response.user.is_authenticated:
+        user = response.user
 
     if response.method == "POST":
         if "update_link" in response.POST:
@@ -66,26 +82,11 @@ def link_update(response, linkid):
 
             link_modify = Link.objects.all().filter(owner=user).get(pk=id_link)
 
-            if link_modify.store != new_company:
-                link_modify.store = new_company
-
-            if link_modify.title != new_product:
-                link_modify.title = new_product
-
-            if link_modify.url != new_url:
-                link_modify.url = new_url
-
-            if link_modify.threshold != new_threshold:
-                link_modify.threshold = new_threshold
+            link_modify.store = new_company
+            link_modify.title = new_product
+            link_modify.url = new_url
+            link_modify.threshold = new_threshold
 
             link_modify.save()
-
-    if response.user.is_authenticated:
-        user = response.user
     
-    instance = get_object_or_404(Link.objects.all().filter(owner=user), pk=linkid)
-    context={
-        'instance':instance
-    }
-    
-    return render(response, "dashboard/modal.html", context)
+    return redirect("dashboard:view")

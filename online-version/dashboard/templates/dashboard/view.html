@@ -171,7 +171,7 @@
                             <td>&dollar;{{ link.threshold }}</td>
                             <td class="td-actions">
 
-                                    <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round open-modal" data-toggle="modal" data-url="{% url 'dashboard:update' linkid=link.pk %}">
+                                    <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round open-modal" data-toggle="modal" data-url="{% url 'dashboard:modal' linkid=link.pk %}">
                                         <i class="material-icons">edit</i>
                                     </button>
 
@@ -255,7 +255,7 @@
 </div>
 
 
-<div class="modal-div" id="modal-div-id">
+<div class="modal-div">
 
 </div>
 
@@ -305,21 +305,21 @@
   
       <!-- Material Dashboard DEMO methods, don't include it in your project! -->
       <!--<script src="{% static 'dashboard/demo/demo.js' %}"></script>-->
-  
-  
+    
       <script>
 
 var modalDiv = $(".modal-div");
 
 $(".open-modal").on("click", function() {
   $.ajax({
+    cache: false,
     url: $(this).attr("data-url"),
     success: function(data) {
-      modalDiv.append(data);
+      modalDiv.html(data);
       $("#editModal").modal();
     },
     error: function(data){
-      window.alert("Error occured while loading link object data for modal.")
+      window.alert("Error occured while fetching object data.")
     }
 
   });

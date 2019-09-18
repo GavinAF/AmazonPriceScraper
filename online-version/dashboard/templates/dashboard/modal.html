@@ -9,8 +9,9 @@
       </div>
       <div class="modal-body">
 
-        
-        <form id="form_add" method="POST" action="{% url 'dashboard:update' %}">
+        <h1>{{instance.pk}}</h1>
+
+        <form name="update-form" id="form_update" method="POST" action="/dashboard/update/">
             {% csrf_token %}
 
             
@@ -38,8 +39,8 @@
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button name="add_link" type="submit" class="btn btn-primary">Modify</button>
+        <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
+        <button form="form_update" name="update_link" type="submit" class="btn btn-primary">Modify</button>
       </div>
     </form>
 

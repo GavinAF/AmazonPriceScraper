@@ -1,0 +1,48 @@
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modify Link</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        
+        <form id="form_add" method="POST" action="{% url 'dashboard:update' %}">
+            {% csrf_token %}
+
+            
+            <input type="hidden" name="linkid" value="{{instance.pk}}" />
+
+          <div class="form-group">
+            <label class="bmd-label-floating">Company</label>
+            <input name="company" type="text" class="form-control" value="{{instance.store}}">
+          </div>
+
+          <div class="form-group">
+            <label class="bmd-label-floating">Product Name</label>
+            <input name="product_name" type="text" class="form-control" value="{{instance.title}}">
+          </div>
+
+            <div class="form-group">
+          <label class="bmd-label-floating">Link</label>
+          <input name="url" type="text" class="form-control" value="{{instance.url}}">
+        </div>
+
+        <div class="form-group">
+          <label class="bmd-label-floating">Threshold (&dollar;)</label>
+          <input name="threshold" type="number" class="form-control" value="{{instance.threshold}}">
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button name="add_link" type="submit" class="btn btn-primary">Modify</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>

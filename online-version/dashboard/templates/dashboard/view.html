@@ -171,7 +171,7 @@
                             <td>&dollar;{{ link.threshold }}</td>
                             <td class="td-actions">
 
-                                    <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round">
+                                    <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round open-modal" data-toggle="modal" data-url="{% url 'dashboard:update' linkid=link.pk %}">
                                         <i class="material-icons">edit</i>
                                     </button>
 
@@ -207,7 +207,7 @@
   </div>
 
 
-  <!-- Modal -->
+  <!-- Add Link Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -254,6 +254,10 @@
   </div>
 </div>
 
+
+<div class="modal-div" id="modal-div-id">
+
+</div>
 
 
       <!--   Core JS Files   -->
@@ -303,6 +307,25 @@
       <!--<script src="{% static 'dashboard/demo/demo.js' %}"></script>-->
   
   
+      <script>
+
+var modalDiv = $(".modal-div");
+
+$(".open-modal").on("click", function() {
+  $.ajax({
+    url: $(this).attr("data-url"),
+    success: function(data) {
+      modalDiv.append(data);
+      $("#editModal").modal();
+    },
+    error: function(data){
+      window.alert("Error occured while loading link object data for modal.")
+    }
+
+  });
+});
+      </script>
+
       <script>
         $(document).ready(function() {
           $().ready(function() {

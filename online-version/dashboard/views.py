@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Link
@@ -53,3 +53,39 @@ def delete(response, linkid):
             Link.objects.all().filter(owner=user).get(pk=linkid).delete()
 
     return redirect("dashboard:view")
+
+def link_update(response, linkid):
+
+    if response.method == "POST":
+        if "update_link" in response.POST:
+            id_link = response.POST.get("linkid", "")
+            new_company = response.POST.get("company", "")
+            new_product = response.POST.get("product_name", "")
+            new_url = response.POST.get("url", "")
+            new_threshold = response.POST.get("threshold", "")
+
+            link_modify = Link.objects.all().filter(owner=user).get(pk=id_link)
+
+            if link_modify.store != new_company:
+                link_modify.store = new_company
+
+            if link_modify.title != new_product:
+                link_modify.title = new_product
+
+            if link_modify.url != new_url:
+                link_modify.url = new_url
+
+            if link_modify.threshold != new_threshold:
+                link_modify.threshold = new_threshold
+
+            link_modify.save()
+
+    if response.user.is_authenticated:
+        user = response.user
+    
+    instance = get_object_or_404(Link.objects.all().filter(owner=user), pk=linkid)
+    context={
+        'instance':instance
+    }
+    
+    return render(response, "dashboard/modal.html", context)

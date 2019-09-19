@@ -29,6 +29,14 @@ def view_links(response):
 
     links = Link.objects.all().filter(owner=user)
 
+    return render(response, "dashboard/view.html", {"username":username, "links":links})
+
+@login_required(login_url="/")
+def create(response):
+
+    if response.user.is_authenticated:
+        user = response.user
+
     if response.method == "POST":
         if "add_link" in response.POST:
             new_company = response.POST.get("company", "")
@@ -38,22 +46,25 @@ def view_links(response):
 
             link_add = Link(url=new_url, store=new_company, threshold=new_threshold, active="True", title=new_product, owner=user)
             link_add.save()
-            return redirect("dashboard:view")
 
-    return render(response, "dashboard/view.html", {"username":username, "links":links})
+            return HttpResponse("")
 
-
-def delete(response, linkid):
+@login_required(login_url="/")
+def delete(response):
 
     if response.user.is_authenticated:
         user = response.user
 
     if response.method == "POST":
         if "delete_link" in response.POST:
+
+            linkid = response.POST.get("linkid", "")
+
             Link.objects.all().filter(owner=user).get(pk=linkid).delete()
 
-    return redirect("dashboard:view")
+    return HttpResponse("")
 
+@login_required(login_url="/")
 def modal(response, linkid):
 
     if response.user.is_authenticated:
@@ -67,6 +78,7 @@ def modal(response, linkid):
     
     return render(response, "dashboard/modal.html", context)
 
+@login_required(login_url="/")
 def update(response):
 
     if response.user.is_authenticated:
@@ -89,4 +101,14 @@ def update(response):
 
             link_modify.save()
     
-    return redirect("dashboard:view")
+    return HttpResponse("")
+
+@login_required(login_url="/")
+def update_table(response):
+
+    if response.user.is_authenticated:
+        user = response.user
+
+    links = Link.objects.all().filter(owner=user)
+
+    return render(response, "dashboard/update_table.html", {"links":links})

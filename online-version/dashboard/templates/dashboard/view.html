@@ -138,10 +138,13 @@
                   <h4 class="card-title ">Product Links</h4>
                   <p class="card-category"> View, add, remove or suspend your links</p>
 
-
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#exampleModal">
   <i class="material-icons">playlist_add</i>
+</button>
+
+<button type="submit" class="btn btn-success btn-round" onclick="refreshTable()">
+  <i class="material-icons">refresh</i>
 </button>
 
 
@@ -160,7 +163,7 @@
                         <th>Status</th>
 
                       </thead>
-                      <tbody>
+                      <tbody class="link-table">
 
                         {% for link in links %}
                         
@@ -175,7 +178,9 @@
                                         <i class="material-icons">edit</i>
                                     </button>
 
-                                    <form class="inline" method="POST" action="/dashboard/delete/{{ link.pk }}" >{% csrf_token %}
+                                    <form id="delete-link-form" class="inline" method="POST">{% csrf_token %}
+
+                                      <input type="hidden" id="linkid-id" name="linkid" value="{{link.pk}}">
 
                                     <button name="delete_link" type="submit" rel="tooltip" class="btn btn-danger btn-round">
                                         <i class="material-icons">close</i>
@@ -226,22 +231,22 @@
 
           <div class="form-group">
             <label class="bmd-label-floating">Company</label>
-            <input name="company" type="text" class="form-control">
+            <input id="company" name="company" type="text" class="form-control">
           </div>
 
           <div class="form-group">
             <label class="bmd-label-floating">Product Name</label>
-            <input name="product_name" type="text" class="form-control">
+            <input id="product_name" name="product_name" type="text" class="form-control">
           </div>
 
             <div class="form-group">
           <label class="bmd-label-floating">Link</label>
-          <input name="url" type="text" class="form-control">
+          <input id="url" name="url" type="text" class="form-control">
         </div>
 
         <div class="form-group">
           <label class="bmd-label-floating">Threshold</label>
-          <input name="threshold" type="number" class="form-control">
+          <input id="threshold" name="threshold" type="number" class="form-control">
         </div>
         
       </div>
@@ -306,11 +311,155 @@
       <!-- Material Dashboard DEMO methods, don't include it in your project! -->
       <!--<script src="{% static 'dashboard/demo/demo.js' %}"></script>-->
     
+
+  <!-- Script that uses ajaxSetup to configure csrf token when using ajax for POST -->
+  <script>
+
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+
+  </script>
+
+<!-- Handles/submits form that adds the link -->
+<script>
+
+$(document).on('submit', '#form_add', function(e){
+
+e.preventDefault();
+
+$.ajax({
+  type: 'POST',
+  cache: false,
+  url: '/dashboard/create/',
+  data:{
+    add_link:"add_link",
+    company:$('#company').val(),
+    product_name:$('#product_name').val(),
+    url:$('#url').val(),
+    threshold:$('#threshold').val()
+  },
+  success: function(){
+    $('#exampleModal').modal('hide');
+    refreshTable()
+  }
+
+
+});
+
+});
+
+</script>
+
+<!-- Function that refreshes/updates the link table via ajax -->
+<script>
+
+function refreshTable(){
+
+  var tableDiv = $(".link-table");
+
+  $.ajax({
+            cache: false,
+            dataType: 'html',
+            url: '/dashboard/update_table',
+            success: function(data) {
+              tableDiv.html(data);
+            },
+            error: function(data){
+              window.alert("Error occured while fetching table data.")
+            }
+        
+          });
+
+}
+
+</script>
+
+
+<!-- Handles/submits the update/modify modal form -->
+<script>
+      
+    $(document).on('submit', '#form_update', function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        cache: false,
+        url: '/dashboard/update/',
+        data:{
+          update_link:"update_link",
+          linkid:$('#instance-id').val(),
+          company:$('#instance-company').val(),
+          product_name:$('#instance-title').val(),
+          url:$('#instance-url').val(),
+          threshold:$('#instance-threshold').val()
+        },
+        success: function(){
+          $('#editModal').modal('hide');
+          refreshTable()
+        }
+
+
+      });
+
+    });
+  
+  </script>
+
+
+<!-- Handles the delete button POST request -->
+<script>
+      
+    $(document).on('submit', '#delete-link-form', function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        cache: false,
+        url: '/dashboard/delete/',
+        data:{
+          delete_link:"delete_link",
+          linkid:$('#linkid-id').val()
+        },
+        success: function(){
+          refreshTable()
+        }
+
+
+      });
+
+    });
+  
+  </script>
+
+<!-- Fetches modal code through GET request & displays it -->
       <script>
 
 var modalDiv = $(".modal-div");
 
-$(".open-modal").on("click", function() {
+$("#body_content").on("click", ".open-modal" ,function() {
   $.ajax({
     cache: false,
     url: $(this).attr("data-url"),
@@ -319,12 +468,14 @@ $(".open-modal").on("click", function() {
       $("#editModal").modal();
     },
     error: function(data){
-      window.alert("Error occured while fetching object data.")
+      window.alert("Error occured while fetching modal data.")
     }
 
   });
 });
       </script>
+
+
 
       <script>
         $(document).ready(function() {

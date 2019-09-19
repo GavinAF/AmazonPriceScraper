@@ -13,5 +13,7 @@ path("delete/", views.delete),
 path("delete/<slug:linkid>", views.delete, name="delete"),
 path("update/", views.update, name="update"),
 path("modal/<slug:linkid>", views.modal, name="modal"),
+path("update_table/", views.update_table, name="update_table"),
+path("create/", views.create, name="create")
 
 ]

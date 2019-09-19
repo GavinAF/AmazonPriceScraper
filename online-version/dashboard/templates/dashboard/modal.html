@@ -15,26 +15,26 @@
             {% csrf_token %}
 
             
-            <input type="hidden" name="linkid" value="{{instance.pk}}" />
+            <input id="instance-id" type="hidden" name="linkid" value="{{instance.pk}}" />
 
           <div class="form-group">
             <label class="bmd-label-floating">Company</label>
-            <input name="company" type="text" class="form-control" value="{{instance.store}}">
+            <input id="instance-company" type="text" class="form-control" value="{{instance.store}}">
           </div>
 
           <div class="form-group">
             <label class="bmd-label-floating">Product Name</label>
-            <input name="product_name" type="text" class="form-control" value="{{instance.title}}">
+            <input id="instance-title" type="text" class="form-control" value="{{instance.title}}">
           </div>
 
             <div class="form-group">
           <label class="bmd-label-floating">Link</label>
-          <input name="url" type="text" class="form-control" value="{{instance.url}}">
+          <input id="instance-url" type="text" class="form-control" value="{{instance.url}}">
         </div>
 
         <div class="form-group">
           <label class="bmd-label-floating">Threshold (&dollar;)</label>
-          <input name="threshold" type="number" class="form-control" value="{{instance.threshold}}">
+          <input id="instance-threshold" type="number" class="form-control" value="{{instance.threshold}}">
         </div>
         
       </div>

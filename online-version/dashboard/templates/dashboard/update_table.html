@@ -1,0 +1,32 @@
+{% for link in links %}
+                        
+<tr>
+    <td class="text-center">{{ link.pk }}</td>
+    <td>{{ link.store }}</td> 
+    <td>{{ link.title }}</td>
+    <td>&dollar;{{ link.threshold }}</td>
+    <td class="td-actions">
+
+            <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round open-modal" data-toggle="modal" data-url="{% url 'dashboard:modal' linkid=link.pk %}">
+                <i class="material-icons">edit</i>
+            </button>
+
+            <form id="delete-link-form" class="inline" method="POST">{% csrf_token %}
+
+              <input type="hidden" id="linkid-id" name="linkid" value="{{link.pk}}">
+
+            <button name="delete_link" type="submit" rel="tooltip" class="btn btn-danger btn-round">
+                <i class="material-icons">close</i>
+            </button>
+
+        </form>
+    </td>
+
+    {% if link.active == "True" %}
+    <td class="text-success">Active</td>
+    {% else %}
+    <td class="text-danger">Inactive</td>
+    {% endif %}
+</tr>
+
+{% endfor %}

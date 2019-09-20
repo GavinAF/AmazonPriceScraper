@@ -467,6 +467,12 @@ $("#body_content").on("click", ".open-modal" ,function() {
       </script>
 
 
+<script>
+$('#exampleModal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+});
+  </script>
+
 
       <script>
         $(document).ready(function() {

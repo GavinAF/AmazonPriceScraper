@@ -178,15 +178,9 @@
                                         <i class="material-icons">edit</i>
                                     </button>
 
-                                    <form id="delete-link-form" class="inline" method="POST">{% csrf_token %}
-
-                                      <input type="hidden" id="linkid-id" name="linkid" value="{{link.pk}}">
-
-                                    <button name="delete_link" type="submit" rel="tooltip" class="btn btn-danger btn-round">
+                                    <button id="delete-button" name="delete_link" type="button" rel="tooltip" class="btn btn-danger btn-round" data-id="{{link.pk}}">
                                         <i class="material-icons">close</i>
                                     </button>
-
-                                </form>
                             </td>
 
                             {% if link.active == "True" %}
@@ -431,17 +425,14 @@ function refreshTable(){
 <!-- Handles the delete button POST request -->
 <script>
       
-    $(document).on('submit', '#delete-link-form', function(e){
-
-      e.preventDefault();
-
+    $(document).on('click', '#delete-button', function(e){
       $.ajax({
         type: 'POST',
         cache: false,
         url: '/dashboard/delete/',
         data:{
           delete_link:"delete_link",
-          linkid:$('#linkid-id').val()
+          linkid:$(this).attr("data-id")
         },
         success: function(){
           refreshTable()

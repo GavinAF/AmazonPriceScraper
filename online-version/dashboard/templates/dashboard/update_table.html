@@ -1,0 +1,26 @@
+{% for link in links %}
+                        
+<tr>
+    <td class="text-center">{{ link.pk }}</td>
+    <td>{{ link.store }}</td> 
+    <td>{{ link.title }}</td>
+    <td>&dollar;{{ link.threshold }}</td>
+    <td class="td-actions">
+
+            <button name="edit_link" type="button" rel="tooltip" class="btn btn-success btn-round open-modal" data-toggle="modal" data-url="{% url 'dashboard:modal' linkid=link.pk %}">
+                <i class="material-icons">edit</i>
+            </button>
+
+            <button id="delete-button" name="delete_link" type="button" rel="tooltip" class="btn btn-danger btn-round" data-id="{{link.pk}}">
+                <i class="material-icons">close</i>
+            </button>
+    </td>
+
+    {% if link.active == "True" %}
+    <td class="text-success">Active</td>
+    {% else %}
+    <td class="text-danger">Inactive</td>
+    {% endif %}
+</tr>
+
+{% endfor %}

@@ -1,0 +1,88 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+<meta charset="utf-8">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home_particle.css' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="{% static 'css/tabui.css' %}">
+
+{% load crispy_forms_tags %}
+
+{% endblock %}
+
+
+{% block body_content %}
+
+<canvas id="particle-canvas"></canvas>
+<script  src="{% static 'js/particle_script.js' %}"></script>
+
+
+      <div class="form">
+      
+        <ul class="tab-group">
+          <li class="tab active"><a href="#signup">Sign Up</a></li>
+          <li class="tab"><a href="#login">Log In</a></li>
+        </ul>
+        
+        <div class="tab-content">
+          <div id="signup">   
+            <h1>Sign Up for Free</h1>
+            
+            <form id="register-form" action="{% url 'main:home' %}" method="POST" class="form-group" autocomplete="country">
+              {% csrf_token %}
+
+              {% for field in register_form.visible_fields %}
+
+              <div class="field-wrap">
+
+                <label>
+                  {{field.label}}<span class="req">*</span>
+                </label>
+
+                {{ field }}
+
+              </div>
+
+              {% endfor %}
+
+              <button form="register-form" name="register" type="submit" class="button button-block">Get Started</button>
+            </form>
+  
+          </div>
+          
+          <div id="login">   
+            <h1>Welcome Back!</h1>
+            
+            <form id="login-form" action="{% url 'main:home' %}" method="POST" class="form-group" autocomplete="country">
+              {% csrf_token %}
+
+              {% for field in login_form.visible_fields %}
+                <div class="field-wrap">
+                  <label>
+                    {{field.label}}<span class="req">*</span>
+                  </label>                
+                  {{ field }}
+                </div>
+              {% endfor %}
+
+              <p class="forgot"><a href="#">Forgot Password?</a></p>
+              <button form="login-form" name="login" type="submit" class="button button-block">Log In</button>
+            </form>
+  
+          </div>
+          
+        </div><!-- tab-content -->
+        
+  </div> <!-- /form -->
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="{% static 'js/tabui.js' %}"></script>
+
+{% endblock %}

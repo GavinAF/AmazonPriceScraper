@@ -51,7 +51,7 @@ def check_price():
     # Strip whitespace off title
     title = (title.strip())
 
-    # Only grab the characters between the dollar sign & decimal point ($123.12 > 123)
+    # Slice digits between dollar sign & decimal
     pstart = price.find(dsign)
     pstart_len = (pstart + len(dsign))
     pend = price.find(dpoint)

@@ -1,0 +1,19 @@
+{
+    "name": "Fire Scraper",
+    "short_name": "Fire Scraper",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#a21717",
+    "background_color": "#a21717",
+    "display": "standalone"
+}

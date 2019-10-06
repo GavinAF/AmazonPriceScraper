@@ -2,15 +2,17 @@ from django_cron import CronJobBase, Schedule
 from .models import Link
 import requests
 from bs4 import BeautifulSoup
-from . import notify_functions
+from .notify_functions import notify
 
 class CheckPrices(CronJobBase):
     RUN_EVERY_MINS = 120
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'fire_scraper.check_prices_job'
+    code = 'fire_scraper.check_prices'
 
     def do(self):
+
+        print("Starting to check prices...")
 
         links = Link.objects.all().filter(active='True')
 
@@ -51,6 +53,5 @@ class CheckPrices(CronJobBase):
 
             if(i_price < alert_amount):
                 difference = alert_amount - i_price
-
                 # url, title, alert_amount, difference, email)
-                notify_functions.notify(URL, title, alert_amount, difference, to_email)
+                notify(URL, title, alert_amount, difference, to_email)

@@ -1,13 +1,6 @@
 import datetime
 import smtplib
 
-def notify(url, title, alert_amount, difference, email):
-
-    subject = "🚨 The price of {} has fallen! 🚨".format(title)
-
-    body = "It's currently {} dollars cheaper than your price point of {}.\nCheck it out now: {}".format(difference, alert_amount, url)
-
-    send_email(subject, body, email)
 
 # Send email in utf-8
 def send_email(subject, content, email):
@@ -34,8 +27,8 @@ def send_email(subject, content, email):
     # add contents
     msg += "\n%s\n" % (content)
 
-    s = smtplib.SMTP("smtp.gmail.com", "567")
 
+    s = smtplib.SMTP("smtp.gmail.com", "587")
     s.ehlo()
     s.starttls()
     s.ehlo()
@@ -44,3 +37,11 @@ def send_email(subject, content, email):
 
     s.sendmail(headers["From"], headers["To"], msg.encode("utf8"))
     s.quit()
+
+def notify(url, title, alert_amount, difference, email):
+
+    subject = "🚨 The price of {} has fallen! 🚨".format(title)
+
+    body = "It's currently {} dollars cheaper than your price point of {}.\nCheck it out now: {}".format(difference, alert_amount, url)
+
+    send_email(subject, body, email)

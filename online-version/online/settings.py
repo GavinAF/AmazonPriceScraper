@@ -126,7 +126,7 @@ USE_L10N = True
 USE_TZ = True
 
 CRON_CLASSES = [
-    "fire_scraper.check_prices_job",
+    "dashboard.links_cron.CheckPrices",
 ]
 
 

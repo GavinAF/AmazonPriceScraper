@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% block title %}Fire Scraper | Login{% endblock %}
+
 {% block head %}
 
 {% endblock %}
@@ -31,13 +33,7 @@
 
         <section id="info">
           <div class="container">
-            <div class="row align-items-center" style="height: 100vh;">
-              <div class="col-sm-12 col-md-6 shadowText text-left">
-                <h1>Tired of missing sales on things you want?</h1>
-                <p>
-                  Fire Scraper is the best platform to find out when something you want falls right into your price range without you even having to refresh a page or lift a finger.
-                </p>
-              </div>
+            <div class="row align-items-center justify-content-center" style="height: 100vh;">
 
               <div class="col-sm-12 col-md-6">
                       <div class="card">
@@ -49,7 +45,7 @@
                           <div class="card-body px-lg-5 pt-0">
                 
                             <!-- Form -->
-                            <form class="text-center" style="color: #757575;" action="" method="POST" > {% csrf_token %}
+                            <form class="text-center" style="color: #757575;" action="" method="POST">{% csrf_token %}
                 
                               <!-- Username -->
                               <div class="md-form ">

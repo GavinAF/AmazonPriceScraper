@@ -1,40 +1,51 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegisterForm, LoginForm
-from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
 
 def home(response):
 
     if response.user.is_authenticated:
         return redirect("dashboard:dashboard")
 
+    # Get data from POST
     if response.method == 'POST':
         if 'register' in response.POST:
-            register_form = RegisterForm(response.POST, prefix='register')
-            if register_form.is_valid():
-                register_form.save()
-            login_form = LoginForm(prefix='login')
+            username = response.POST.get("username", "")
+            email = response.POST.get("email", "")
+            password = response.POST.get("password", "")
 
-        elif 'login' in response.POST:
-            login_form = LoginForm(data=response.POST, prefix='login')
-            if login_form.is_valid():
+            # Create new user with inputted data
+            new_user = User.objects.create_user(username, email, password)
+            new_user.save()
 
-                user = login_form.get_user()
+            user = authenticate(response, username=username, password=password)
+            if user is not None:
                 login(response, user)
+                return redirect("dashboard:dashboard")
 
-                return redirect("dashboard/")
-            register_form = RegisterForm(prefix='register')
+    return render(response, "main/home.html")
 
-    else:
-        register_form = RegisterForm(prefix='register')
-        login_form = LoginForm(prefix='login')
-    
-    return render(response, "main/home.html", {"login_form":login_form, "register_form":register_form})
-    
+def login_view(response):
+
+    if response.method == "POST":
+        if "login" in response.POST:
+            username = response.POST.get("username", "")
+            password = response.POST.get("password", "")
+
+            user = authenticate(response, username=username, password=password)
+            if user is not None:
+                login(response, user)
+                return redirect("dashboard:dashboard")
+
+
+    return render(response, "main/login.html")
+
+def register_view(response):
+    return render(response, "main/register.html")
+
 @login_required(login_url="/")
 def logout_view(response):
     logout(response)

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         {% load static %}
-        <title>{% block title%}Fire Scraper{% endblock %}</title>
+        <title>{% block title %}Fire Scraper{% endblock %}</title>
 
-
-
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 
         <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}">
@@ -17,8 +18,17 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#a21717">
 
-
-
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'css/pro/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="{% static 'css/pro/mdb.min.css' %}" rel="stylesheet">
+        <!-- Custom Style -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <!-- Line Awesome (Icons) -->
+        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+        <!-- Google Fonts (Karla & Rubik) -->
+        <link href="https://fonts.googleapis.com/css?family=Karla|Rubik&display=swap" rel="stylesheet">
+        
         {% block head %}
         {% endblock %}
 
@@ -26,10 +36,20 @@
 
     <body>
 
-        <div id="body_content", name="body_content">
+        <div id="body_content" name="body_content">
             {% block body_content %}
             {% endblock %}
         </div>
 
-    </body>
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'js/pro/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'js/pro/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/pro/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/pro/mdb.min.js' %}"></script>
+
+</body>
 </html>

@@ -1,0 +1,71 @@
+.brand-text {
+    font-family: "Rubik", sans-serif;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+
+.text-main-color {
+    color: #EA5D0B;
+}
+
+.sign-up-icon {
+    font-size: 30px;
+}
+
+div.content {
+	position: relative;
+	font-family: 'Karla', sans-serif;
+	color: white;
+}
+
+.shadowText {
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+p.h-text {
+	font-size: 18px;
+}
+
+#topColor {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	transform: skewY(-12deg);
+	transform-origin: 0%;
+	background: linear-gradient(150deg,#12c2e9 15%,#c471ed 70%,#f64f59 94%);
+	top: 0;
+	left: 0;
+}
+
+#topColor > * {
+	-webkit-transform: skewY(12deg);
+	transform: skewY(12deg);
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#info {
+	position: relative;
+}
+
+.text-left {
+	text-align: left;
+}
+
+@media (min-width: 576px) {
+
+	html {
+		overflow: visible;
+	}
+
+}
+
+@media (min-width: 768px) {
+
+	html {
+		overflow: hidden;
+	}
+
+}
